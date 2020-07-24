@@ -313,6 +313,22 @@ fast_downward_plugin(
 )
 
 fast_downward_plugin(
+    NAME XUP
+    HELP "Plugin for convex upward parabola priority function"
+    SOURCES
+        evaluators/xup_evaluator
+    DEPENDS EVALUATORS_PLUGIN_GROUP
+)
+
+fast_downward_plugin(
+    NAME PWXDP
+    HELP "Plugin for PWXDP priority function"
+    SOURCES
+        evaluators/pwxdp_evaluator
+    DEPENDS EVALUATORS_PLUGIN_GROUP
+)
+
+fast_downward_plugin(
     NAME NULL_PRUNING_METHOD
     HELP "Pruning method that does nothing"
     SOURCES
