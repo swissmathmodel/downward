@@ -14,11 +14,20 @@ namespace xdp_evaluator {
 XDPEvaluator::XDPEvaluator(const Options &opts)
     : evaluator(opts.get<shared_ptr<Evaluator>>("eval")),
       w(opts.get<double>("weight")) 
+<<<<<<< HEAD
       {
 }
 
 XDPEvaluator::XDPEvaluator(const shared_ptr<Evaluator> &eval, double weight)
     : evaluator(eval), w(weight) {
+=======
+      { //add g -- g = eval_context.get_g_value(), 
+      //change weight to double
+}
+
+XDPEvaluator::XDPEvaluator(const shared_ptr<Evaluator> &eval, double weight) //add g
+    : evaluator(eval), w(weight) { //add g -- g
+>>>>>>> ecea56b08... Add functional XDP
 }
 
 XDPEvaluator::~XDPEvaluator() {
@@ -60,4 +69,8 @@ static shared_ptr<Evaluator> _parse(OptionParser &parser) {
 }
 
 static Plugin<Evaluator> _plugin("xdp", _parse, "evaluators_basic");
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> ecea56b08... Add functional XDP
