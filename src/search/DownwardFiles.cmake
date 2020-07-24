@@ -305,6 +305,14 @@ fast_downward_plugin(
 )
 
 fast_downward_plugin(
+    NAME XDP
+    HELP "Plugin for convex downward parabola priority function"
+    SOURCES
+        evaluators/xdp_evaluator
+    DEPENDS EVALUATORS_PLUGIN_GROUP
+)
+
+fast_downward_plugin(
     NAME NULL_PRUNING_METHOD
     HELP "Pruning method that does nothing"
     SOURCES
@@ -762,6 +770,7 @@ fast_downward_plugin(
         algorithms/sccs
     DEPENDENCY_ONLY
 )
+
 
 fast_downward_add_plugin_sources(PLANNER_SOURCES)
 
