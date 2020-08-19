@@ -77,6 +77,7 @@ extern std::shared_ptr<OpenListFactory> create_wastar_open_list_factory(
 */
 extern std::pair<std::shared_ptr<OpenListFactory>, const std::shared_ptr<Evaluator>>
 create_astar_open_list_factory_and_f_eval(const options::Options &opts);
+
 }
 
 #endif

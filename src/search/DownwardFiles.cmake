@@ -305,7 +305,15 @@ fast_downward_plugin(
 )
 
 fast_downward_plugin(
-    NAME XDP
+    NAME SUB_EVALUATOR
+    HELP "Plugin for WA, XDP, XUP & PWXDP priority functions"
+    SOURCES
+        evaluators/sub_evaluator
+    DEPENDS EVALUATORS_PLUGIN_GROUP
+)
+
+fast_downward_plugin(
+    NAME XDP_EVALUATOR
     HELP "Plugin for convex downward parabola priority function"
     SOURCES
         evaluators/xdp_evaluator
@@ -313,7 +321,7 @@ fast_downward_plugin(
 )
 
 fast_downward_plugin(
-    NAME XUP
+    NAME XUP_EVALUATOR
     HELP "Plugin for convex upward parabola priority function"
     SOURCES
         evaluators/xup_evaluator
@@ -321,7 +329,7 @@ fast_downward_plugin(
 )
 
 fast_downward_plugin(
-    NAME PWXDP
+    NAME PWXDP_EVALUATOR
     HELP "Plugin for PWXDP priority function"
     SOURCES
         evaluators/pwxdp_evaluator
@@ -465,6 +473,23 @@ fast_downward_plugin(
         search_engines/lazy_search
     DEPENDS ORDERED_SET SUCCESSOR_GENERATOR
     DEPENDENCY_ONLY
+)
+
+fast_downward_plugin(
+    NAME IOS_SEARCH
+    HELP "Improved Optimistic search algorithm"
+    SOURCES
+        search_engines/ios_search
+    DEPENDS NULL_PRUNING_METHOD ORDERED_SET SUCCESSOR_GENERATOR
+    DEPENDENCY_ONLY
+)
+
+fast_downward_plugin(
+    NAME PLUGIN_IOS
+    HELP "Improved Optimistic Search"
+    SOURCES
+        search_engines/plugin_ios
+    DEPENDS IOS_SEARCH SEARCH_COMMON
 )
 
 fast_downward_plugin(
