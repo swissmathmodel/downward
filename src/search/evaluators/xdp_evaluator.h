@@ -28,8 +28,4 @@ public:
 };
 }
 
-<<<<<<< HEAD
 #endif
-=======
-#endif
->>>>>>> ecea56b08... Add functional XDP
