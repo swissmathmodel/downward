@@ -7,6 +7,7 @@
 
 #include <cstdlib>
 #include <sstream>
+#include <cmath>
 
 using namespace std;
 
