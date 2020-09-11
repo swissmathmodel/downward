@@ -2,17 +2,17 @@
 
 import os
 import os.path
+from pathlib import Path
 import platform
 
 from downward.experiment import FastDownwardExperiment
 from downward.reports.absolute import AbsoluteReport
 from downward.reports.compare import ComparativeReport
 from downward.reports.scatter import ScatterPlotReport
-from lab import cached_revision
 from lab.environments import BaselSlurmEnvironment, LocalEnvironment
 
 
-ATTRIBUTES = ["coverage", "error", "expansions", "total_time"]
+ATTRIBUTES = ["coverage", "error", "expansions", "total_time", "run_dir"]
 
 NODE = platform.node()
 if NODE.endswith(".scicore.unibas.ch") or NODE.endswith(".cluster.bc2.ch"):
@@ -24,10 +24,9 @@ else:
     ENV = LocalEnvironment(processes=2)
 
 # Use path to your Fast Downward repository.
-REPO = os.environ["DOWNWARD_REPO"]
+REPO = str(Path(__file__).resolve().parents[2])
 BENCHMARKS_DIR = os.environ["DOWNWARD_BENCHMARKS"]
-VCS = cached_revision.get_version_control_system(REPO)
-REV = "default" if VCS == cached_revision.MERCURIAL else "main"
+REV = "01283fa9728d44ff5db291185573c5f5245827a7"
 
 exp = FastDownwardExperiment(environment=ENV)
 
@@ -38,10 +37,8 @@ exp.add_parser(exp.SINGLE_SEARCH_PARSER)
 exp.add_parser(exp.PLANNER_PARSER)
 
 exp.add_suite(BENCHMARKS_DIR, SUITE)
-exp.add_algorithm("WA", REPO, REV, ["--evaluator", "h=sub(cegar(),2,WA)","--search", "astar(h)"])
-exp.add_algorithm("XDP", REPO, REV, ["--evaluator", "h=sub(cegar(),2,XDP)","--search", "astar(h)"])
-exp.add_algorithm("XUP", REPO, REV, ["--evaluator", "h=sub(cegar(),2,XUP)","--search", "astar(h)"])
-exp.add_algorithm("PWXDP", REPO, REV, ["--evaluator", "h=sub(cegar(),2,PWXDP)","--search", "astar(h)"])
+for function in ["WA", "XDP", "XUP", "PWXDP"]:
+    exp.add_algorithm(function, REPO, REV, ["--evaluator", "h=cegar()", "--evaluator", f"fsub=sub(h,2,{function})", "--search", "eager(tiebreaking([fsub, h], unsafe_pruning=false), reopen_closed=true, f_eval=sum([g(), h]))"])
 
 # Add step that writes experiment files to disk.
 exp.add_step("build", exp.build)
@@ -53,13 +50,14 @@ exp.add_step("start", exp.start_runs)
 # writes them to *-eval/properties.
 exp.add_fetcher(name="fetch")
 
-algorithm_pairs = [("WA", "XDP", "XUP", "PWXDP")]
+algorithm_pairs = [("WA", "XDP"), ("XUP", "PWXDP")]
 
 # Add report step (ComparativeReport).
-exp.add_report(ComparativeReport(algorithm_pairs, attributes=ATTRIBUTES), outfile="report.html")
+exp.add_report(AbsoluteReport(attributes=ATTRIBUTES), outfile="absolute.html")
+exp.add_report(ComparativeReport(algorithm_pairs, attributes=ATTRIBUTES), outfile="compare.html")
 
 # Add scatter plot report step.
-exp.add_report(ScatterPlotReport(attributes=["expansions"], filter_algorithm=["WA", "XDP", "XUP", "PWXDP"]), outfile="scatterplot.png",)
+exp.add_report(ScatterPlotReport(attributes=["expansions"], filter_algorithm=["XUP", "PWXDP"]), outfile="scatterplot.png",)
 
 # Parse the commandline and show or run experiment steps.
 exp.run_steps()
