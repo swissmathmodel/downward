@@ -1,13 +1,9 @@
-#! /usr/bin/env python
-
-#"Comparing WA, XDP, XUP & PWXDP priority functions on optimal strips benchmark suite"
-
 import os
 import os.path
 import platform
 
 from downward.experiment import FastDownwardExperiment
-from downward.reports.absolute import AbsoluteReport
+from downward.reports.absolute import AbsoluteReport, ComparativeReport
 from downward.reports.scatter import ScatterPlotReport
 from lab import cached_revision
 from lab.environments import BaselSlurmEnvironment, LocalEnvironment
