@@ -57,7 +57,8 @@ exp.add_report(AbsoluteReport(attributes=ATTRIBUTES), outfile="absolute.html")
 exp.add_report(ComparativeReport(algorithm_pairs, attributes=ATTRIBUTES), outfile="compare.html")
 
 # Add scatter plot report step.
-exp.add_report(ScatterPlotReport(attributes=["expansions"], filter_algorithm=["XUP", "PWXDP"]), outfile="scatterplot.png",)
+exp.add_report(ScatterPlotReport(attributes=["expansions"], filter_algorithm=["XUP", "PWXDP"]), outfile="scatterplot_xup_pwxdp.png",)
+exp.add_report(ScatterPlotReport(attributes=["expansions"], filter_algorithm=["WA", "XDP"]), outfile="scatterplot_wa_xdp.png",)
 
 # Parse the commandline and show or run experiment steps.
 exp.run_steps()
