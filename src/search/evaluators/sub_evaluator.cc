@@ -14,11 +14,11 @@ namespace sub_evaluator {
     SubEvaluator::SubEvaluator(const Options &opts)
             : evaluator(opts.get < shared_ptr < Evaluator >> ("eval")),
               w(opts.get<double>("weight")),
-              t(opts.get<EvaluatorType>("type")) {
+              type(opts.get<EvaluatorType>("type")) {
     }
 
     SubEvaluator::SubEvaluator(const shared_ptr <Evaluator> &eval, double weight, EvaluatorType type)
-            : evaluator(eval), w(weight), t(type) {
+            : evaluator(eval), w(weight), type(type) {
     }
 
     SubEvaluator::~SubEvaluator() {
@@ -33,28 +33,29 @@ namespace sub_evaluator {
         // Note that this produces no preferred operators.
         int g = eval_context.get_g_value();
         EvaluationResult result;
-        int value = eval_context.get_evaluator_value_or_infinity(evaluator.get());
+        int h = eval_context.get_evaluator_value_or_infinity(evaluator.get());
+        int value = -1;
         if (value != EvaluationResult::INFTY) {
-            if (t == WA) {
-                value += ((1 / w) * g);
+            if (type == WA) {
+                value = g/w + h;
             }
 
-            if (t == XDP) {
-                value = ((1 / (2 * w)) * ((2 * w - 1) * value) + g + sqrt(((g - value) ^ 2) + (4 * w * g * value)));
+            if (type == XDP) {
+                value = ((1 / (2 * w)) * (((2 * w - 1) * h) + g + sqrt((pow((g - h),2)) + (4 * w * g * h))));
             }
 
-            if (t == XUP) {
-                value = ((1 / (2 * w)) * value + g + sqrt(((g + value) ^ 2) + (4 * w * (w - 1) * value * value)));
+            if (type == XUP) {
+                value = ((1 / (2 * w)) * (h + g + sqrt((pow((g + h),2)) + (4 * w * (w - 1) * h * h))));
             }
 
-            if (t == PWXDP) {
-                if (value > g) {
-                    value = (g + ((2 * w - 1) * value)) / w;
+            if (type == PWXDP) {
+                if (h > g) {
+                    value = g + h;
                 } else {
-                    value += g;
+                    value = (g + ((2 * w - 1) * h)) / w;
                 }
             } else {
-                value = 0;
+                ABORT("invalid type");
             }
         }
         result.set_evaluator_value(value);

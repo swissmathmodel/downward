@@ -15,7 +15,7 @@ namespace sub_evaluator {
 class SubEvaluator : public Evaluator {
     std::shared_ptr<Evaluator> evaluator;
     double w;
-    EvaluatorType t;
+    EvaluatorType type;
 
 public:
     explicit SubEvaluator(const options::Options &opts);

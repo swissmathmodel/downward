@@ -305,7 +305,6 @@ fast_downward_plugin(
 )
 
 fast_downward_plugin(
-<<<<<<< HEAD
     NAME SUB_EVALUATOR
     HELP "Plugin for WA, XDP, XUP & PWXDP priority functions"
     SOURCES
@@ -314,36 +313,6 @@ fast_downward_plugin(
 )
 
 fast_downward_plugin(
-    NAME XDP_EVALUATOR
-=======
-    NAME XDP
->>>>>>> ecea56b08... Add functional XDP
-    HELP "Plugin for convex downward parabola priority function"
-    SOURCES
-        evaluators/xdp_evaluator
-    DEPENDS EVALUATORS_PLUGIN_GROUP
-)
-
-fast_downward_plugin(
-<<<<<<< HEAD
-    NAME XUP_EVALUATOR
-    HELP "Plugin for convex upward parabola priority function"
-    SOURCES
-        evaluators/xup_evaluator
-    DEPENDS EVALUATORS_PLUGIN_GROUP
-)
-
-fast_downward_plugin(
-    NAME PWXDP_EVALUATOR
-    HELP "Plugin for PWXDP priority function"
-    SOURCES
-        evaluators/pwxdp_evaluator
-    DEPENDS EVALUATORS_PLUGIN_GROUP
-)
-
-fast_downward_plugin(
-=======
->>>>>>> ecea56b08... Add functional XDP
     NAME NULL_PRUNING_METHOD
     HELP "Pruning method that does nothing"
     SOURCES
