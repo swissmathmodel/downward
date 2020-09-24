@@ -60,47 +60,47 @@ exp.add_report(AbsoluteReport(attributes=ATTRIBUTES), outfile="absolute.html")
 exp.add_report(ComparativeReport(algorithm_pairs, attributes=ATTRIBUTES), outfile="compare.html")
 
 # Add scatter plot report step.
-exp.add_report(ScatterPlotReport(attributes=["cost"], filter_algorithm=["ASTAR", "WA"]), outfile="scatterplot_cost_astar_wa.png",)
-exp.add_report(ScatterPlotReport(attributes=["cost"], filter_algorithm=["ASTAR", "XDP"]), outfile="scatterplot_cost_astar_xdp.png",)
-exp.add_report(ScatterPlotReport(attributes=["cost"], filter_algorithm=["ASTAR", "XUP"]), outfile="scatterplot_cost_astar_xup.png",)
-exp.add_report(ScatterPlotReport(attributes=["cost"], filter_algorithm=["ASTAR", "PWXDP"]), outfile="scatterplot_cost_astar_pwxdp.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["ASTAR", "WA"]), outfile="scatterplot_cost_astar_wa.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["ASTAR", "XDP"]), outfile="scatterplot_cost_astar_xdp.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["ASTAR", "XUP"]), outfile="scatterplot_cost_astar_xup.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["ASTAR", "PWXDP"]), outfile="scatterplot_cost_astar_pwxdp.png",)
 
-exp.add_report(ScatterPlotReport(attributes=["cost"], filter_algorithm=["WA", "XDP"]), outfile="scatterplot_cost_wa_xdp.png",)
-exp.add_report(ScatterPlotReport(attributes=["cost"], filter_algorithm=["WA", "XUP"]), outfile="scatterplot_cost_wa_xup.png",)
-exp.add_report(ScatterPlotReport(attributes=["cost"], filter_algorithm=["WA", "PWXDP"]), outfile="scatterplot_cost_wa_pwxdp.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["WA", "XDP"]), outfile="scatterplot_cost_wa_xdp.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["WA", "XUP"]), outfile="scatterplot_cost_wa_xup.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["WA", "PWXDP"]), outfile="scatterplot_cost_wa_pwxdp.png",)
 
-exp.add_report(ScatterPlotReport(attributes=["cost"], filter_algorithm=["XDP", "XUP"]), outfile="scatterplot_cost_xdp_xup.png",)
-exp.add_report(ScatterPlotReport(attributes=["cost"], filter_algorithm=["XDP", "PWXDP"]), outfile="scatterplot_cost_xdp_pwxdp.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["XDP", "XUP"]), outfile="scatterplot_cost_xdp_xup.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["XDP", "PWXDP"]), outfile="scatterplot_cost_xdp_pwxdp.png",)
 
-exp.add_report(ScatterPlotReport(attributes=["cost"], filter_algorithm=["XUP", "PWXDP"]), outfile="scatterplot_cost_xup_pwxdp.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["XUP", "PWXDP"]), outfile="scatterplot_cost_xup_pwxdp.png",)
 
-exp.add_report(ScatterPlotReport(attributes=["total_time"], filter_algorithm=["ASTAR", "WA"]), outfile="scatterplot_time_astar_wa.png",)
-exp.add_report(ScatterPlotReport(attributes=["total_time"], filter_algorithm=["ASTAR", "XDP"]), outfile="scatterplot_time_astar_xdp.png",)
-exp.add_report(ScatterPlotReport(attributes=["total_time"], filter_algorithm=["ASTAR", "XUP"]), outfile="scatterplot_time_astar_xup.png",)
-exp.add_report(ScatterPlotReport(attributes=["total_time"], filter_algorithm=["ASTAR", "PWXDP"]), outfile="scatterplot_time_astar_pwxdp.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["total_time"], filter_algorithm=["ASTAR", "WA"]), outfile="scatterplot_time_astar_wa.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["total_time"], filter_algorithm=["ASTAR", "XDP"]), outfile="scatterplot_time_astar_xdp.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["total_time"], filter_algorithm=["ASTAR", "XUP"]), outfile="scatterplot_time_astar_xup.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["total_time"], filter_algorithm=["ASTAR", "PWXDP"]), outfile="scatterplot_time_astar_pwxdp.png",)
 
-exp.add_report(ScatterPlotReport(attributes=["total_time"], filter_algorithm=["WA", "XDP"]), outfile="scatterplot_time_wa_xdp.png",)
-exp.add_report(ScatterPlotReport(attributes=["total_time"], filter_algorithm=["WA", "XUP"]), outfile="scatterplot_time_wa_xup.png",)
-exp.add_report(ScatterPlotReport(attributes=["total_time"], filter_algorithm=["WA", "PWXDP"]), outfile="scatterplot_time_wa_pwxdp.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["total_time"], filter_algorithm=["WA", "XDP"]), outfile="scatterplot_time_wa_xdp.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["total_time"], filter_algorithm=["WA", "XUP"]), outfile="scatterplot_time_wa_xup.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["total_time"], filter_algorithm=["WA", "PWXDP"]), outfile="scatterplot_time_wa_pwxdp.png",)
 
-exp.add_report(ScatterPlotReport(attributes=["total_time"], filter_algorithm=["XDP", "XUP"]), outfile="scatterplot_time_xdp_xup.png",)
-exp.add_report(ScatterPlotReport(attributes=["total_time"], filter_algorithm=["XDP", "PWXDP"]), outfile="scatterplot_time_xdp_pwxdp.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["total_time"], filter_algorithm=["XDP", "XUP"]), outfile="scatterplot_time_xdp_xup.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["total_time"], filter_algorithm=["XDP", "PWXDP"]), outfile="scatterplot_time_xdp_pwxdp.png",)
 
-exp.add_report(ScatterPlotReport(attributes=["total_time"], filter_algorithm=["XUP", "PWXDP"]), outfile="scatterplot_time_xup_pwxdp.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["total_time"], filter_algorithm=["XUP", "PWXDP"]), outfile="scatterplot_time_xup_pwxdp.png",)
 
-exp.add_report(ScatterPlotReport(attributes=["expansions"], filter_algorithm=["ASTAR", "WA"]), outfile="scatterplot_expansions_astar_wa.png",)
-exp.add_report(ScatterPlotReport(attributes=["expansions"], filter_algorithm=["ASTAR", "XDP"]), outfile="scatterplot_expansions_astar_xdp.png",)
-exp.add_report(ScatterPlotReport(attributes=["expansions"], filter_algorithm=["ASTAR", "XUP"]), outfile="scatterplot_expansions_astar_xup.png",)
-exp.add_report(ScatterPlotReport(attributes=["expansions"], filter_algorithm=["ASTAR", "PWXDP"]), outfile="scatterplot_expansions_astar_pwxdp.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["expansions"], filter_algorithm=["ASTAR", "WA"]), outfile="scatterplot_expansions_astar_wa.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["expansions"], filter_algorithm=["ASTAR", "XDP"]), outfile="scatterplot_expansions_astar_xdp.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["expansions"], filter_algorithm=["ASTAR", "XUP"]), outfile="scatterplot_expansions_astar_xup.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["expansions"], filter_algorithm=["ASTAR", "PWXDP"]), outfile="scatterplot_expansions_astar_pwxdp.png",)
 
-exp.add_report(ScatterPlotReport(attributes=["expansions"], filter_algorithm=["WA", "XDP"]), outfile="scatterplot_expansions_wa_xdp.png",)
-exp.add_report(ScatterPlotReport(attributes=["expansions"], filter_algorithm=["WA", "XUP"]), outfile="scatterplot_expansions_wa_xup.png",)
-exp.add_report(ScatterPlotReport(attributes=["expansions"], filter_algorithm=["WA", "PWXDP"]), outfile="scatterplot_expansions_wa_pwxdp.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["expansions"], filter_algorithm=["WA", "XDP"]), outfile="scatterplot_expansions_wa_xdp.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["expansions"], filter_algorithm=["WA", "XUP"]), outfile="scatterplot_expansions_wa_xup.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["expansions"], filter_algorithm=["WA", "PWXDP"]), outfile="scatterplot_expansions_wa_pwxdp.png",)
 
-exp.add_report(ScatterPlotReport(attributes=["expansions"], filter_algorithm=["XDP", "XUP"]), outfile="scatterplot_expansions_xdp_xup.png",)
-exp.add_report(ScatterPlotReport(attributes=["expansions"], filter_algorithm=["XDP", "PWXDP"]), outfile="scatterplot_expansions_xdp_pwxdp.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["expansions"], filter_algorithm=["XDP", "XUP"]), outfile="scatterplot_expansions_xdp_xup.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["expansions"], filter_algorithm=["XDP", "PWXDP"]), outfile="scatterplot_expansions_xdp_pwxdp.png",)
 
-exp.add_report(ScatterPlotReport(attributes=["expansions"], filter_algorithm=["XUP", "PWXDP"]), outfile="scatterplot_expansions_xup_pwxdp.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["expansions"], filter_algorithm=["XUP", "PWXDP"]), outfile="scatterplot_expansions_xup_pwxdp.png",)
 
 # Parse the commandline and show or run experiment steps.
 exp.run_steps()
