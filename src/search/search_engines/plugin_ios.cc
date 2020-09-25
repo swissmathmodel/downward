@@ -17,10 +17,10 @@ namespace plugin_ios{
         parser.add_option<shared_ptr<Evaluator>>(
                 "f_eval", "evaluator for focal list");
 
-        ios_search::add_options_to_parser(parser);
+        ios::add_options_to_parser(parser);
         Options opts = parser.parse();
 
-        shared_ptr<ios_search::IOSSearch> engine;
+        shared_ptr<ios::IOSSearch> engine;
         if (!parser.dry_run()) {
             engine = make_shared<eager_search::EagerSearch>(opts);
         }
