@@ -39,7 +39,7 @@ exp.add_parser(exp.PLANNER_PARSER)
 exp.add_suite(BENCHMARKS_DIR, SUITE)
 exp.add_algorithm("ASTAR", REPO, REV, ["--search", "astar(cegar())"])
 for function in ["WA", "XDP", "XUP", "PWXDP"]:
-    exp.add_algorithm(function, REPO, REV, ["--evaluator", "h=cegar()", "--evaluator", f"fsub=sub(h,2,{function})", "--search", "eager(tiebreaking([fsub, h], unsafe_pruning=false), reopen_closed=true, f_eval=sum([g(), h]))"])
+    exp.add_algorithm(function, REPO, REV, ["--evaluator", "h=cegar()", "--evaluator", f"fsub=sub(h,2,{function})", "--search", "ios(tiebreaking([fsub, h], unsafe_pruning=false), reopen_closed=true, f_eval=sum([g(), h]))"])
 
 # Add step that writes experiment files to disk.
 exp.add_step("build", exp.build)
