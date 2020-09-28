@@ -37,33 +37,33 @@ namespace sub_evaluator {
         int value = -1;
         if (h == EvaluationResult::INFTY) {
             value = h;
-            else {
-                if (type == WA) {
-                    value = g / w + h;
-                }
-
-                if (type == XDP) {
-                    value = ((1 / (2 * w)) * (((2 * w - 1) * h) + g + sqrt((pow((g - h), 2)) + (4 * w * g * h))));
-                }
-
-                if (type == XUP) {
-                    value = ((1 / (2 * w)) * (h + g + sqrt((pow((g + h), 2)) + (4 * w * (w - 1) * h * h))));
-                }
-
-                if (type == PWXDP) {
-                    if (h > g) {
-                        value = g + h;
-                    } else {
-                        value = (g + ((2 * w - 1) * h)) / w;
-                    }
-                } else {
-                    ABORT("invalid type");
-                }
+        } else {
+            if (type == WA) {
+                value = g / w + h;
             }
-        }
-        result.set_evaluator_value(value);
-        return result;
+
+            if (type == XDP) {
+                value = ((1 / (2 * w)) * (((2 * w - 1) * h) + g + sqrt((pow((g - h), 2)) + (4 * w * g * h))));
+            }
+
+            if (type == XUP) {
+                value = ((1 / (2 * w)) * (h + g + sqrt((pow((g + h), 2)) + (4 * w * (w - 1) * h * h))));
+            }
+
+            if (type == PWXDP) {
+                if (h > g) {
+                    value = g + h;
+                } else {
+                    value = (g + ((2 * w - 1) * h)) / w;
+                }
+            } else {
+                ABORT("invalid type");
+            }
     }
+
+    result.set_evaluator_value(value);
+    return result;
+}
 
     void SubEvaluator::get_path_dependent_evaluators(set<Evaluator *> &evals) {
         evaluator->get_path_dependent_evaluators(evals);
