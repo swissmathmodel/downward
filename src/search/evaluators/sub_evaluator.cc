@@ -35,27 +35,30 @@ namespace sub_evaluator {
         EvaluationResult result;
         int h = eval_context.get_evaluator_value_or_infinity(evaluator.get());
         int value = -1;
-        if (value != EvaluationResult::INFTY) {
-            if (type == WA) {
-                value = g/w + h;
-            }
-
-            if (type == XDP) {
-                value = ((1 / (2 * w)) * (((2 * w - 1) * h) + g + sqrt((pow((g - h),2)) + (4 * w * g * h))));
-            }
-
-            if (type == XUP) {
-                value = ((1 / (2 * w)) * (h + g + sqrt((pow((g + h),2)) + (4 * w * (w - 1) * h * h))));
-            }
-
-            if (type == PWXDP) {
-                if (h > g) {
-                    value = g + h;
-                } else {
-                    value = (g + ((2 * w - 1) * h)) / w;
+        if (h == EvaluationResult::INFTY) {
+            value = h;
+            else {
+                if (type == WA) {
+                    value = g / w + h;
                 }
-            } else {
-                ABORT("invalid type");
+
+                if (type == XDP) {
+                    value = ((1 / (2 * w)) * (((2 * w - 1) * h) + g + sqrt((pow((g - h), 2)) + (4 * w * g * h))));
+                }
+
+                if (type == XUP) {
+                    value = ((1 / (2 * w)) * (h + g + sqrt((pow((g + h), 2)) + (4 * w * (w - 1) * h * h))));
+                }
+
+                if (type == PWXDP) {
+                    if (h > g) {
+                        value = g + h;
+                    } else {
+                        value = (g + ((2 * w - 1) * h)) / w;
+                    }
+                } else {
+                    ABORT("invalid type");
+                }
             }
         }
         result.set_evaluator_value(value);
