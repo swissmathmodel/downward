@@ -40,17 +40,11 @@ namespace sub_evaluator {
         } else {
             if (type == WA) {
                 value = g / w + h;
-            }
-
-            if (type == XDP) {
+            } else if (type == XDP) {
                 value = ((1 / (2 * w)) * (((2 * w - 1) * h) + g + sqrt((pow((g - h), 2)) + (4 * w * g * h))));
-            }
-
-            if (type == XUP) {
+            } else if (type == XUP) {
                 value = ((1 / (2 * w)) * (h + g + sqrt((pow((g + h), 2)) + (4 * w * (w - 1) * h * h))));
-            }
-
-            if (type == PWXDP) {
+            } else if (type == PWXDP) {
                 if (h > g) {
                     value = g + h;
                 } else {
@@ -59,7 +53,7 @@ namespace sub_evaluator {
             } else {
                 ABORT("invalid type");
             }
-    }
+        }
 
     result.set_evaluator_value(value);
     return result;
