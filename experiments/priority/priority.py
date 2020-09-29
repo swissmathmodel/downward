@@ -27,7 +27,7 @@ else:
 # Use path to your Fast Downward repository.
 REPO = str(Path(__file__).resolve().parents[2])
 BENCHMARKS_DIR = os.environ["DOWNWARD_BENCHMARKS"]
-REV = "01283fa9728d44ff5db291185573c5f5245827a7"
+REV = "steiblinbscthesis"
 
 exp = FastDownwardExperiment(environment=ENV)
 
