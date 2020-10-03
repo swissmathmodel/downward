@@ -59,8 +59,8 @@ def omit_parcprinter(run):
     return "parcprinter" not in run["domain"]
 
 # Add report step (ComparativeReport).
-exp.add_report(AbsoluteReport(attributes=ATTRIBUTES), outfile="absolute.html", format="tex")
-exp.add_report(ComparativeReport(algorithm_pairs, attributes=ATTRIBUTES), outfile="compare.html", format="tex")
+exp.add_report(AbsoluteReport(attributes=ATTRIBUTES), outfile="absolute.html")
+exp.add_report(ComparativeReport(algorithm_pairs, attributes=ATTRIBUTES), outfile="compare.html")
 
 # Add scatter plot report step.
 exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["ASTAR", "WA"]), outfile="scatterplot_cost_astar_wa.png", filter=omit_parcprinter,)
