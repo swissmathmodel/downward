@@ -55,25 +55,27 @@ exp.add_fetcher(name="fetch")
 for function in ["WA", "XDP", "XUP", "PWXDP"]:
     algorithm_pairs = [("ASTAR", function),("WA", function), ("XDP", function), ("XUP", function)]
 
+def omit_parcprinter(run):
+    return "parcprinter" not in run["domain"]
 
 # Add report step (ComparativeReport).
-exp.add_report(AbsoluteReport(attributes=ATTRIBUTES), outfile="absolute.html")
-exp.add_report(ComparativeReport(algorithm_pairs, attributes=ATTRIBUTES), outfile="compare.html")
+exp.add_report(AbsoluteReport(attributes=ATTRIBUTES), outfile="absolute.html", format="tex")
+exp.add_report(ComparativeReport(algorithm_pairs, attributes=ATTRIBUTES), outfile="compare.html", format="tex")
 
 # Add scatter plot report step.
-exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["ASTAR", "WA"]), outfile="scatterplot_cost_astar_wa.png",)
-exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["ASTAR", "XDP"]), outfile="scatterplot_cost_astar_xdp.png",)
-exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["ASTAR", "XUP"]), outfile="scatterplot_cost_astar_xup.png",)
-exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["ASTAR", "PWXDP"]), outfile="scatterplot_cost_astar_pwxdp.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["ASTAR", "WA"]), outfile="scatterplot_cost_astar_wa.png", filter=omit_parcprinter,)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["ASTAR", "XDP"]), outfile="scatterplot_cost_astar_xdp.png", filter=omit_parcprinter,)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["ASTAR", "XUP"]), outfile="scatterplot_cost_astar_xup.png", filter=omit_parcprinter,)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["ASTAR", "PWXDP"]), outfile="scatterplot_cost_astar_pwxdp.png", filter=omit_parcprinter,)
 
-exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["WA", "XDP"]), outfile="scatterplot_cost_wa_xdp.png",)
-exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["WA", "XUP"]), outfile="scatterplot_cost_wa_xup.png",)
-exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["WA", "PWXDP"]), outfile="scatterplot_cost_wa_pwxdp.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["WA", "XDP"]), outfile="scatterplot_cost_wa_xdp.png", filter=omit_parcprinter,)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["WA", "XUP"]), outfile="scatterplot_cost_wa_xup.png", filter=omit_parcprinter,)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["WA", "PWXDP"]), outfile="scatterplot_cost_wa_pwxdp.png", filter=omit_parcprinter,)
 
-exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["XDP", "XUP"]), outfile="scatterplot_cost_xdp_xup.png",)
-exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["XDP", "PWXDP"]), outfile="scatterplot_cost_xdp_pwxdp.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["XDP", "XUP"]), outfile="scatterplot_cost_xdp_xup.png", filter=omit_parcprinter,)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["XDP", "PWXDP"]), outfile="scatterplot_cost_xdp_pwxdp.png", filter=omit_parcprinter,)
 
-exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["XUP", "PWXDP"]), outfile="scatterplot_cost_xup_pwxdp.png",)
+exp.add_report(ScatterPlotReport(relative=True, attributes=["cost"], filter_algorithm=["XUP", "PWXDP"]), outfile="scatterplot_cost_xup_pwxdp.png", filter=omit_parcprinter,)
 
 exp.add_report(ScatterPlotReport(relative=True, attributes=["total_time"], filter_algorithm=["ASTAR", "WA"]), outfile="scatterplot_time_astar_wa.png",)
 exp.add_report(ScatterPlotReport(relative=True, attributes=["total_time"], filter_algorithm=["ASTAR", "XDP"]), outfile="scatterplot_time_astar_xdp.png",)
