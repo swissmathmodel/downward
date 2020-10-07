@@ -12,7 +12,7 @@
 using namespace std;
 namespace sub_evaluator {
 SubEvaluator::SubEvaluator(const Options &opts)
-    : evaluator(opts.get < shared_ptr < Evaluator >> ("eval")),
+    : evaluator(opts.get<shared_ptr<Evaluator>>("eval")),
       w(opts.get<double>("weight")),
       type(opts.get<EvaluatorType>("type")) {
 }
@@ -65,7 +65,7 @@ void SubEvaluator::get_path_dependent_evaluators(set<Evaluator *> &evals) {
     evaluator->get_path_dependent_evaluators(evals);
 }
 
-static shared_ptr <Evaluator> _parse(OptionParser &parser) {
+void add_priority_function_option(options::OptionParser &parser) {
     vector<string> evaluator_type;
     vector<string> evaluator_type_doc;
     evaluator_type.push_back("GH");
@@ -83,13 +83,17 @@ static shared_ptr <Evaluator> _parse(OptionParser &parser) {
     evaluator_type.push_back("PWXDP");
     evaluator_type_doc.push_back(
         "PWXDP priority function: f(n) = h(n) + g(n) if h(n) > g(n), otherwise f(n) = (g + (2*w - 1)*h) / w");
+    parser.add_enum_option<EvaluatorType>(
+        "type", evaluator_type, "pick evaluator", "WA", evaluator_type_doc);
+}
+
+static shared_ptr <Evaluator> _parse(options::OptionParser &parser) {
     parser.document_synopsis(
         "WA/XDP/XUP/PWXDP evaluator",
         "Different priority functions for suboptimal search");
     parser.add_option<shared_ptr<Evaluator>> ("eval", "evaluator");
     parser.add_option<double>("weight", "weight");
-    parser.add_enum_option<EvaluatorType>(
-        "type", evaluator_type, "pick evaluator", "WA", evaluator_type_doc);
+    add_priority_function_option(parser);
     Options opts = parser.parse();
     if (parser.dry_run())
         return nullptr;

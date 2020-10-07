@@ -4,6 +4,8 @@
 #include "../open_list.h"
 #include "../search_engine.h"
 
+#include "../evaluators/sub_evaluator.h"
+
 #include <memory>
 #include <vector>
 
@@ -17,9 +19,8 @@ class Options;
 namespace ios_search {
 class IOSSearch : public SearchEngine {
     const bool reopen_closed_nodes;
-    std::shared_ptr<Evaluator> eval;
-    double weight;
-    bool found_plan;
+    const double weight;
+    const std::shared_ptr<Evaluator> heuristic;
     std::unique_ptr<SearchSpace> focal_search_space;
     std::unique_ptr<StateOpenList> focal_list;
     std::unique_ptr<StateOpenList> open_list;

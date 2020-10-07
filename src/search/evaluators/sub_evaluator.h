@@ -7,6 +7,7 @@
 
 namespace options {
 class Options;
+class OptionParser;
 }
 
 enum EvaluatorType {GH, WA, XDP, XUP, PWXDP};
@@ -29,6 +30,8 @@ public:
 
     virtual void get_path_dependent_evaluators(std::set<Evaluator *> &evals) override;
 };
+
+extern void add_priority_function_option(options::OptionParser &parser);
 }
 
 #endif
