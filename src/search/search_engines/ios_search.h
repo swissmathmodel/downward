@@ -17,7 +17,9 @@ class Options;
 namespace ios_search {
 class IOSSearch : public SearchEngine {
     const bool reopen_closed_nodes;
+    std::shared_ptr<Evaluator> eval;
     std::unique_ptr<StateOpenList> focal_list;
+
 protected:
     virtual void initialize() override;
 

@@ -8,6 +8,7 @@
 #include "../task_utils/successor_generator.h"
 
 #include "../evaluators/sub_evaluator.h"
+#include "../open_lists/best_first_open_list.h"
 #include "../task_utils/successor_generator.h"
 #include "../task_utils/task_properties.h"
 #include "../utils/logging.h"
@@ -26,8 +27,12 @@ namespace ios_search {
 IOSSearch::IOSSearch(const Options &opts)
     : SearchEngine(opts),
       reopen_closed_nodes(opts.get<bool>("reopen_closed")),
-      focal_list(opts.get < shared_ptr < OpenListFactory >> ("focal")->
-                 create_state_open_list()) {
+      eval(opts.get<shared_ptr<Evaluator>>("eval")) {
+    Options options;
+    options.set<shared_ptr<Evaluator>>("eval", eval);
+    options.set<bool>("pref_only", false);
+    focal_list = utils::make_unique_ptr<standard_scalar_open_list::BestFirstOpenListFactory>(
+        options)->create_state_open_list();
 }
 
 void IOSSearch::initialize() {
