@@ -9,7 +9,7 @@ namespace options {
 class Options;
 }
 
-enum EvaluatorType {WA, XDP, XUP, PWXDP};
+enum EvaluatorType {GH, WA, XDP, XUP, PWXDP};
 
 namespace sub_evaluator {
 class SubEvaluator : public Evaluator {
