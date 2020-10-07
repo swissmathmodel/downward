@@ -9,48 +9,32 @@
 
 class Evaluator;
 
-class PruningMethod;
-
 namespace options {
-    class OptionParser;
-
-    class Options;
+class OptionParser;
+class Options;
 }
 
 namespace ios_search {
-    class IOSSearch : public SearchEngine {
-        const bool reopen_closed_nodes;
+class IOSSearch : public SearchEngine {
+    const bool reopen_closed_nodes;
+    std::unique_ptr<StateOpenList> focal_list;
+protected:
+    virtual void initialize() override;
 
-        std::unique_ptr<StateOpenList> focal_list;
-        std::shared_ptr<Evaluator> f_evaluator;
+    virtual SearchStatus step() override;
 
-        std::vector<Evaluator *> path_dependent_evaluators;
-        std::vector<std::shared_ptr<Evaluator>> preferred_operator_evaluators;
+    bool check_goal_and_switch_to_open(const GlobalState &state);
 
-        void start_f_value_statistics(EvaluationContext &eval_context);
+public:
+    explicit IOSSearch(const options::Options &opts);
+    virtual ~IOSSearch() = default;
 
-        void update_f_value_statistics(EvaluationContext &eval_context);
+    virtual void print_statistics() const override;
 
-        void reward_progress();
+    void dump_search_space() const;
+};
 
-    protected:
-        virtual void initialize() override;
-
-        virtual SearchStatus step() override;
-
-        bool check_goal_and_switch_to_open(const GlobalState &state);
-
-    public:
-        explicit IOSSearch(const options::Options &opts);
-
-        virtual ~IOSSearch() = default;
-
-        virtual void print_statistics() const override;
-
-        void dump_search_space() const;
-    };
-
-    extern void add_options_to_parser(options::OptionParser &parser);
+extern void add_options_to_parser(options::OptionParser &parser);
 }
 
 #endif
