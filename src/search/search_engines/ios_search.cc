@@ -22,7 +22,8 @@ IOSSearch::IOSSearch(const Options &opts)
     : SearchEngine(opts),
       reopen_closed_nodes(opts.get<bool>("reopen_closed")),
       eval(opts.get<shared_ptr<Evaluator>>("eval")),
-      found_plan(false) {
+      found_plan(false),
+      focal_search_space(state_registry) {
     Options options;
     options.set<shared_ptr<Evaluator>>("eval", eval);
     options.set<bool>("pref_only", false);
@@ -48,10 +49,13 @@ void IOSSearch::initialize() {
     } else {
         if (search_progress.check_progress(eval_context))
             statistics.print_checkpoint_line(0);
-        SearchNode node = search_space.get_node(initial_state);
-        node.open_initial();
 
+        SearchNode node_focal = focal_search_space.get_node(initial_state);
+        node_focal.open_initial();
         focal_list->insert(eval_context, initial_state.get_id());
+
+        SearchNode node_open = search_space.get_node(initial_state);
+        node_open.open_initial();
         open_list->insert(eval_context, initial_state.get_id());
     }
 
@@ -60,6 +64,7 @@ void IOSSearch::initialize() {
 
 void IOSSearch::print_statistics() const {
     statistics.print_detailed_statistics();
+    focal_search_space.print_statistics();
     search_space.print_statistics();
 }
 
@@ -72,7 +77,7 @@ SearchStatus IOSSearch::do_focal_list_step() {
         }
         StateID id = focal_list->remove_min();
         GlobalState s = state_registry.lookup_state(id);
-        node.emplace(search_space.get_node(s));
+        node.emplace(focal_search_space.get_node(s));
 
         if (node->is_closed())
             continue;
@@ -99,7 +104,7 @@ SearchStatus IOSSearch::do_focal_list_step() {
         statistics.inc_generated();
         bool is_preferred = true;
 
-        SearchNode succ_node = search_space.get_node(succ_state);
+        SearchNode succ_node = focal_search_space.get_node(succ_state);
 
         // Previously encountered dead end. Don't re-evaluate.
         if (succ_node.is_dead_end())
@@ -292,6 +297,7 @@ SearchStatus IOSSearch::step() {
 }
 
 void IOSSearch::dump_search_space() const {
+    focal_search_space.dump(task_proxy);
     search_space.dump(task_proxy);
 }
 

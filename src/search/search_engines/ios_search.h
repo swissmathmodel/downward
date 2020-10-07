@@ -19,6 +19,7 @@ class IOSSearch : public SearchEngine {
     const bool reopen_closed_nodes;
     std::shared_ptr<Evaluator> eval;
     bool found_plan;
+    SearchSpace focal_search_space;
     std::unique_ptr<StateOpenList> focal_list;
     std::unique_ptr<StateOpenList> open_list;
 
