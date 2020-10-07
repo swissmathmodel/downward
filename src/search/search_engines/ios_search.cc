@@ -80,6 +80,22 @@ void IOSSearch::print_statistics() const {
     search_space.print_statistics();
 }
 
+bool IOSSearch::check_goal_and_set_incumbent_plan(const GlobalState &state) {
+    if (task_properties::is_goal_state(task_proxy, state)) {
+        utils::g_log << "Incumbent solution found!" << endl;
+        // Only the first plan will be found in the focal search space.
+        if (!incumbent_plan) {
+            incumbent_plan = utils::make_unique_ptr<Plan>();
+            focal_search_space->trace_path(state, *incumbent_plan);
+        } else {
+            incumbent_plan->clear();
+            search_space.trace_path(state, *incumbent_plan);
+        }
+        return true;
+    }
+    return false;
+}
+
 SearchStatus IOSSearch::do_focal_list_step() {
     tl::optional <SearchNode> node;
     while (true) {
@@ -101,7 +117,7 @@ SearchStatus IOSSearch::do_focal_list_step() {
     }
 
     GlobalState s = node->get_state();
-    if (check_goal_and_set_plan(s))
+    if (check_goal_and_set_incumbent_plan(s))
         return SOLVED;
 
     vector<OperatorID> applicable_ops;
@@ -204,7 +220,7 @@ SearchStatus IOSSearch::do_open_list_step() {
     }
 
     GlobalState s = node->get_state();
-    if (check_goal_and_set_plan(s))
+    if (check_goal_and_set_incumbent_plan(s))
         return SOLVED;
 
     // Compute fmin.
@@ -214,7 +230,7 @@ SearchStatus IOSSearch::do_open_list_step() {
     int fmin = g + eval_context.get_evaluator_value(heuristic.get());
 
     // TODO: We could compute plan cost only when a new plan is found.
-    int plan_cost = calculate_plan_cost(plan, task_proxy);
+    int plan_cost = calculate_plan_cost(*incumbent_plan, task_proxy);
     if (plan_cost <= weight * fmin) {
         cout << "Proved solution to be w-suboptimal." << endl;
         return SOLVED;
@@ -302,9 +318,9 @@ SearchStatus IOSSearch::do_open_list_step() {
 SearchStatus IOSSearch::step() {
     bool debug = false;
     if (debug) {
-        cout << "Found solution: " << found_solution() << endl;
+        cout << "Incumbent plan: " << incumbent_plan.get() << endl;
     }
-    if (!found_solution()) {
+    if (!incumbent_plan) {
         SearchStatus status = do_focal_list_step();
         if (debug) {
             cout << "status: " << status << endl;
@@ -323,6 +339,7 @@ SearchStatus IOSSearch::step() {
             cout << "status: " << status << endl;
         }
         if (status == SOLVED) {
+            set_plan(*incumbent_plan);
             return SOLVED;
         } else if (status == FAILED) {
             return FAILED;

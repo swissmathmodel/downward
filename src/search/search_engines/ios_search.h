@@ -25,6 +25,9 @@ class IOSSearch : public SearchEngine {
     std::unique_ptr<StateOpenList> focal_list;
     std::unique_ptr<StateOpenList> open_list;
 
+    std::unique_ptr<Plan> incumbent_plan;
+
+    bool check_goal_and_set_incumbent_plan(const GlobalState &state);
     SearchStatus do_focal_list_step();
     SearchStatus do_open_list_step();
 
