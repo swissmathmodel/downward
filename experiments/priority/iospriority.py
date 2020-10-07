@@ -38,8 +38,8 @@ exp.add_parser(exp.SINGLE_SEARCH_PARSER)
 exp.add_parser(exp.PLANNER_PARSER)
 
 exp.add_suite(BENCHMARKS_DIR, SUITE)
-#for function in ["WA", "XDP", "XUP", "PWXDP"]:
-exp.add_algorithm("XDP",REPO, REV, ["--evaluator", "h=cegar()", "--search", "ios(heuristic=h, type=XDP, weight=2)"])
+for function in ["WA", "XDP", "XUP", "PWXDP"]:
+    exp.add_algorithm(function,REPO, REV, ["--evaluator", "h=cegar()", "--search", f"fios=ios(heuristic=h, type={function}, weight=2)"])
 
 # Add step that writes experiment files to disk.
 exp.add_step("build", exp.build)
