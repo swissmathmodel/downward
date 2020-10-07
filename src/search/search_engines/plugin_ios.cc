@@ -13,6 +13,7 @@ static shared_ptr<SearchEngine> _parse(OptionParser &parser) {
                              "This search function uses specified priority functions "
                              "in a focal open list to conduct suboptimal search.");
     parser.add_option<shared_ptr<Evaluator>>("eval", "evaluator");
+    parser.add_option<double>("weight", "weight", "2.0");
     parser.add_option<bool>("reopen_closed", "reopen closed nodes", "true");
 
     ios_search::add_options_to_parser(parser);

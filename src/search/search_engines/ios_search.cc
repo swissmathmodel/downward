@@ -22,6 +22,7 @@ IOSSearch::IOSSearch(const Options &opts)
     : SearchEngine(opts),
       reopen_closed_nodes(opts.get<bool>("reopen_closed")),
       eval(opts.get<shared_ptr<Evaluator>>("eval")),
+      weight(opts.get<double>("weight")),
       found_plan(false),
       focal_search_space(state_registry) {
     Options options;
@@ -195,6 +196,18 @@ SearchStatus IOSSearch::do_open_list_step() {
     if (check_goal_and_set_plan(s))
         return SOLVED;     //HERE
 
+    // Compute fmin.
+    EvaluationContext eval_context(s, node->get_real_g(), true, &statistics);
+    assert(eval_context.is_evaluator_value_infinite());
+    int fmin = eval_context.get_evaluator_value(eval.get());
+
+    // TODO: We could compute plan cost only when a new plan is found.
+    int plan_cost = calculate_plan_cost(plan, task_proxy);
+    if (plan_cost <= weight * fmin) {
+        cout << "Proved solution to be w-suboptimal." << endl;
+        return SOLVED;
+    }
+
     vector<OperatorID> applicable_ops;
     successor_generator.generate_applicable_ops(s, applicable_ops);
 
@@ -275,10 +288,15 @@ SearchStatus IOSSearch::do_open_list_step() {
 }
 
 SearchStatus IOSSearch::step() {
-    cout << "STEP: " << found_plan << endl;
+    bool debug = false;
+    if (debug) {
+        cout << "STEP: " << found_plan << endl;
+    }
     if (!found_plan) {
         SearchStatus status = do_focal_list_step();
-        cout << "status: " << status << endl;
+        if (debug) {
+            cout << "status: " << status << endl;
+        }
         if (status == SOLVED) {
             found_plan = true;
         } else if (status == FAILED) {
@@ -286,7 +304,9 @@ SearchStatus IOSSearch::step() {
         }
     } else {
         SearchStatus status = do_open_list_step();
-        cout << "status: " << status << endl;
+        if (debug) {
+            cout << "status: " << status << endl;
+        }
         if (status == SOLVED) {
             return SOLVED;
         } else if (status == FAILED) {
