@@ -18,14 +18,17 @@ namespace ios_search {
 class IOSSearch : public SearchEngine {
     const bool reopen_closed_nodes;
     std::shared_ptr<Evaluator> eval;
+    bool found_plan;
     std::unique_ptr<StateOpenList> focal_list;
+    std::unique_ptr<StateOpenList> open_list;
+
+    SearchStatus do_focal_list_step();
+    SearchStatus do_open_list_step();
 
 protected:
     virtual void initialize() override;
 
     virtual SearchStatus step() override;
-
-    bool check_goal_and_switch_to_open(const GlobalState &state);
 
 public:
     explicit IOSSearch(const options::Options &opts);
