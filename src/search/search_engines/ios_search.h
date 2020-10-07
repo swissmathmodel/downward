@@ -20,7 +20,7 @@ class IOSSearch : public SearchEngine {
     std::shared_ptr<Evaluator> eval;
     double weight;
     bool found_plan;
-    SearchSpace focal_search_space;
+    std::unique_ptr<SearchSpace> focal_search_space;
     std::unique_ptr<StateOpenList> focal_list;
     std::unique_ptr<StateOpenList> open_list;
 
