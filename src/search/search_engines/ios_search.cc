@@ -40,10 +40,6 @@ void IOSSearch::initialize() {
                  << (reopen_closed_nodes ? " with" : " without")
                  << " reopening closed nodes, (real) bound = " << bound
                  << endl;
-    assert(focal_list);
-
-    set < Evaluator * > evals;
-    focal_list->get_path_dependent_evaluators(evals);
 
     const GlobalState &initial_state = state_registry.get_initial_state();
     EvaluationContext eval_context(initial_state, 0, true, &statistics);
@@ -83,12 +79,6 @@ SearchStatus IOSSearch::step() {
         if (node->is_closed())
             continue;
 
-        /*
-          We can pass calculate_preferred=false here since preferred
-          operators are computed when the state is expanded.
-        */
-        EvaluationContext eval_context(s, node->get_g(), false, &statistics);
-
         node->close();
         assert(!node->is_dead_end());
         statistics.inc_expanded();
@@ -99,11 +89,8 @@ SearchStatus IOSSearch::step() {
     if (check_goal_and_switch_to_open(s))
         return SOLVED;     //HERE
 
-    vector <OperatorID> applicable_ops;
+    vector<OperatorID> applicable_ops;
     successor_generator.generate_applicable_ops(s, applicable_ops);
-
-    // This evaluates the expanded state (again) to get preferred ops
-    EvaluationContext eval_context(s, node->get_g(), false, &statistics, true);
 
     for (OperatorID op_id : applicable_ops) {
         OperatorProxy op = task_proxy.get_operators()[op_id];
