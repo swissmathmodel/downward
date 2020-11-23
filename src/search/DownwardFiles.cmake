@@ -305,6 +305,14 @@ fast_downward_plugin(
 )
 
 fast_downward_plugin(
+    NAME SUB_EVALUATOR
+    HELP "Plugin for WA, XDP, XUP & PWXDP priority functions"
+    SOURCES
+        evaluators/sub_evaluator
+    DEPENDS EVALUATORS_PLUGIN_GROUP
+)
+
+fast_downward_plugin(
     NAME NULL_PRUNING_METHOD
     HELP "Pruning method that does nothing"
     SOURCES
@@ -441,6 +449,23 @@ fast_downward_plugin(
         search_engines/lazy_search
     DEPENDS ORDERED_SET SUCCESSOR_GENERATOR
     DEPENDENCY_ONLY
+)
+
+fast_downward_plugin(
+    NAME IOS_SEARCH
+    HELP "Improved Optimistic search algorithm"
+    SOURCES
+        search_engines/ios_search
+    DEPENDS NULL_PRUNING_METHOD ORDERED_SET SUCCESSOR_GENERATOR
+    DEPENDENCY_ONLY
+)
+
+fast_downward_plugin(
+    NAME PLUGIN_IOS
+    HELP "Improved Optimistic Search"
+    SOURCES
+        search_engines/plugin_ios
+    DEPENDS IOS_SEARCH SEARCH_COMMON
 )
 
 fast_downward_plugin(
@@ -762,6 +787,7 @@ fast_downward_plugin(
         algorithms/sccs
     DEPENDENCY_ONLY
 )
+
 
 fast_downward_add_plugin_sources(PLANNER_SOURCES)
 
